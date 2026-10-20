@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ff8fba" />
+    <title>🌷 Thiệp yêu thương 20/10</title>
+    <style>
+      :root {
+        --pink: #ff4389;
+        --rose: #c51e68;
+        --ink: #85134e;
+        --glass: #fff8f2d9;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        overflow-x: hidden;
+        color: var(--ink);
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: linear-gradient(
+          -45deg,
+          #ff9abd,
+          #ffd0df,
+          #ffe4c8,
+          #f8b7e0,
+          #ffc3d6
+        );
+        background-size: 400% 400%;
+        animation: bgShift 18s ease infinite;
+      }
+      button {
+        font: inherit;
+      }
+      #sky,
+      #fireworks {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+      #sky {
+        z-index: 0;
+      }
+      #fireworks {
+        z-index: 5;
+      }
+      .wrap {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 34px 14px;
+      }
+      .card {
+        width: min(920px, 100%);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        padding: clamp(24px, 5vw, 54px) clamp(16px, 4vw, 48px);
+        border: 1px solid #ffffffd9;
+        border-radius: 34px;
+        background: linear-gradient(145deg, #fffaf0e8, #fff0f8e8);
+        box-shadow:
+          0 25px 90px #9c1b5740,
+          inset 0 1px #fff;
+        backdrop-filter: blur(14px);
+        animation: cardIn 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+      .card:before,
+      .card:after {
+        content: "✿";
+        position: absolute;
+        color: #ff7eaa88;
+        font-size: clamp(70px, 12vw, 130px);
+        pointer-events: none;
+        animation: slowSpin 18s linear infinite;
+      }
+      .card:before {
+        top: -25px;
+        left: -15px;
+      }
+      .card:after {
+        bottom: -35px;
+        right: -15px;
+        animation-direction: reverse;
+      }
+      .ribbon {
+        display: inline-block;
+        padding: 8px 15px;
+        border-radius: 999px;
+        background: #ffdfeb;
+        border: 1px solid white;
+        color: #b51f65;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        box-shadow: 0 5px 18px #d52e7b20;
+      }
+      h1 {
+        margin: 18px 0 0;
+        font-family: Georgia, serif;
+        font-size: clamp(2rem, 7vw, 4.8rem);
+        line-height: 1.06;
+        color: #c31b68;
+        text-shadow:
+          0 2px #fff,
+          0 8px 25px #e8438b40;
+      }
+      .date {
+        font-weight: 950;
+        font-size: clamp(4rem, 13vw, 8rem);
+        letter-spacing: 0.025em;
+        line-height: 1.12;
+        margin: 6px 0 12px;
+        background: linear-gradient(90deg, #ff3d89, #ff9e51, #d92584, #ff3d89);
+        background-size: 250% auto;
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        filter: drop-shadow(0 5px 1px #fff);
+        animation:
+          shine 4s linear infinite,
+          pulse 1.8s ease-in-out infinite;
+      }
+      .subtitle {
+        font-family: Georgia, serif;
+        font-style: italic;
+        font-size: clamp(1.05rem, 3vw, 1.45rem);
+        margin: 0 auto 25px;
+        max-width: 650px;
+      }
+      .type-line {
+        min-height: 1.6em;
+        color: #c51e68;
+        font-weight: 750;
+        margin: 0 auto 20px;
+      }
+      .message {
+        max-width: 690px;
+        margin: 0 auto;
+        padding: clamp(16px, 4vw, 30px);
+        border-radius: 24px;
+        text-align: left;
+        background: #fffaf0c9;
+        border: 1px solid #fff;
+        box-shadow: 0 12px 35px #d74a8822;
+      }
+      .wish {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        margin: 13px 0;
+        line-height: 1.55;
+        font-size: clamp(0.97rem, 2.5vw, 1.12rem);
+        opacity: 0;
+        transform: translateY(18px);
+        animation: rise 0.8s ease forwards;
+      }
+      .wish:nth-child(1) {
+        animation-delay: 0.3s;
+      }
+      .wish:nth-child(2) {
+        animation-delay: 0.6s;
+      }
+      .wish:nth-child(3) {
+        animation-delay: 0.9s;
+      }
+      .wish:nth-child(4) {
+        animation-delay: 1.2s;
+      }
+      .wish:nth-child(5) {
+        animation-delay: 1.5s;
+      }
+      .wish .emoji {
+        font-size: 1.35em;
+        animation: wobble 2.5s ease-in-out infinite;
+      }
+      .signature {
+        font-weight: 750;
+        margin: 24px auto 18px;
+        max-width: 650px;
+      }
+      .actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .btn {
+        border: 0;
+        border-radius: 999px;
+        padding: 13px 19px;
+        color: white;
+        font-weight: 800;
+        cursor: pointer;
+        background: linear-gradient(110deg, #ff4388, #d82e85);
+        box-shadow: 0 8px 22px #df347c40;
+        transition:
+          transform 0.2s,
+          filter 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn:hover {
+        transform: translateY(-3px) scale(1.025);
+        filter: saturate(1.2);
+      }
+      .btn.secondary {
+        color: #a31b60;
+        background: #fff;
+        border: 1px solid #ffd0e2;
+      }
+      .surprise {
+        display: none;
+        margin: 20px auto 0;
+        max-width: 620px;
+        padding: 20px;
+        border-radius: 20px;
+        background: #fff;
+        border: 1px solid #ffd6e6;
+        font:
+          italic 1.13rem/1.7 Georgia,
+          serif;
+        box-shadow: 0 10px 30px #d74a8822;
+      }
+      .surprise.show {
+        display: block;
+        animation: rise 0.6s ease both;
+      }
+      .tiles {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin: 22px auto 0;
+        max-width: 680px;
+      }
+      .tile {
+        padding: 15px 8px;
+        background: #ffffffa8;
+        border: 1px solid #fff;
+        border-radius: 18px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        transition: transform 0.25s;
+      }
+      .tile:hover {
+        transform: translateY(-5px) rotate(-1deg);
+      }
+      .tile b {
+        display: block;
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+        animation: float 3s ease-in-out infinite;
+      }
+      footer {
+        margin-top: 24px;
+        font-size: 0.82rem;
+        color: #b12b6d;
+      }
+
+      /* Chữ ký người gửi */
+      .author {
+        margin-top: 20px;
+        font-size: clamp(1rem, 3vw, 1.3rem);
+        font-weight: bold;
+        color: #a31b60;
+        animation: authorGlow 2s ease-in-out infinite alternate;
+      }
+
+      .author span {
+        color: #ff1684;
+        text-shadow:
+          0 0 8px #ff80b5,
+          0 0 18px #ff4389;
+        letter-spacing: 1px;
+      }
+      .hint {
+        font-size: 0.8rem;
+        opacity: 0.8;
+        margin-top: 10px;
+      }
+      .floaty {
+        position: fixed;
+        z-index: 4;
+        pointer-events: none;
+        will-change: transform;
+        filter: drop-shadow(0 3px 3px #a51d5030);
+      }
+      .petal {
+        top: -50px;
+        animation: fall linear forwards;
+      }
+      .heart {
+        bottom: -45px;
+        animation: floatUp ease-out forwards;
+      }
+      .burst {
+        animation: burst 1.1s ease-out forwards;
+      }
+      #musicStatus {
+        font-size: 0.78rem;
+        margin-top: 10px;
+        color: #a51b5c;
+      }
+      @keyframes bgShift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+      @keyframes cardIn {
+        from {
+          opacity: 0;
+          transform: translateY(25px) scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes shine {
+        to {
+          background-position: 250% center;
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.035);
+        }
+      }
+      @keyframes rise {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fall {
+        to {
+          transform: translate3d(var(--drift), 110vh, 0) rotate(700deg);
+          opacity: 0.1;
+        }
+      }
+      @keyframes floatUp {
+        to {
+          transform: translateY(-115vh) translateX(var(--side)) rotate(25deg)
+            scale(1.4);
+          opacity: 0;
+        }
+      }
+      @keyframes burst {
+        0% {
+          transform: translate(0, 0) scale(0.3);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--x), var(--y)) scale(1.3);
+          opacity: 0;
+        }
+      }
+      @keyframes slowSpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes wobble {
+        0%,
+        100% {
+          transform: rotate(-7deg);
+        }
+        50% {
+          transform: rotate(7deg);
+        }
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+      @keyframes authorGlow {
+        from {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        to {
+          transform: scale(1.04);
+          opacity: 1;
+        }
+      }
+      @media (max-width: 560px) {
+        .tiles {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .card {
+          border-radius: 25px;
+        }
+        .ribbon {
+          letter-spacing: 0.06em;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="sky"></canvas><canvas id="fireworks"></canvas>
+    <div class="wrap">
+      <main class="card">
+        <div class="ribbon">💌 Gửi yêu thương đến một nửa thế giới 💌</div>
+        <h1>Chúc Mừng<br />Ngày Phụ Nữ Việt Nam</h1>
+        <div class="date">20/10</div>
+        <p class="subtitle">Tôn vinh những người phụ nữ tuyệt vời 🌷</p>
+        <p class="type-line" id="typeLine" aria-live="polite"></p>
+        <section class="message" aria-label="Lời chúc">
+          <p class="wish">
+            <span class="emoji">🌹</span
+            ><span>Chúc bạn luôn xinh đẹp, tự tin và rạng rỡ.</span>
+          </p>
+          <p class="wish">
+            <span class="emoji">🌸</span
+            ><span>Chúc mỗi ngày đều ngập tràn niềm vui và tiếng cười.</span>
+          </p>
+          <p class="wish">
+            <span class="emoji">🍀</span
+            ><span>Chúc bình an, sức khỏe và mọi điều tốt đẹp.</span>
+          </p>
+          <p class="wish">
+            <span class="emoji">✨</span
+            ><span
+              >Chúc thành công trong công việc, tỏa sáng theo cách riêng.</span
+            >
+          </p>
+          <p class="wish">
+            <span class="emoji">💖</span
+            ><span
+              >Mong bạn luôn được yêu thương, trân trọng và hạnh phúc.</span
+            >
+          </p>
+        </section>
+        <div class="tiles">
+          <div class="tile"><b>💗</b>Xinh đẹp<br />mỗi ngày</div>
+          <div class="tile"><b>🌿</b>Hạnh phúc<br />bình an</div>
+          <div class="tile"><b>⭐</b>Thành công<br />tỏa sáng</div>
+          <div class="tile"><b>💞</b>Luôn được<br />yêu thương</div>
+        </div>
+        <p class="signature">
+          Gửi ngàn lời yêu thương đến những người phụ nữ tuyệt vời! 💐
+        </p>
+        <div class="author">💌 Người gửi: <span>BQ.Trung</span> 💗</div>
+        <div class="actions">
+          <button class="btn" id="surpriseBtn">💌 Mở lời chúc bí mật</button>
+          <button class="btn secondary" id="burstBtn">🎆 Bắn pháo hoa</button>
+          <button class="btn secondary" id="musicBtn">🎵 Bật nhạc nền</button>
+          <button class="btn secondary" id="shareBtn">🔗 Chia sẻ thiệp</button>
+        </div>
+        <div class="surprise" id="surprise" aria-live="polite">
+          Chúc bạn có một ngày 20/10 thật dịu dàng, ấm áp và đáng nhớ. Mong nụ
+          cười luôn ở trên môi, những ước mơ luôn được chắp cánh và yêu thương
+          luôn ở bên bạn! ❤️🌷
+        </div>
+        <div id="musicStatus" aria-live="polite"></div>
+        <p class="hint">
+          ✨ Chạm vào bất kỳ đâu để tạo trái tim • Nhấn “Bắn pháo hoa” để thắp
+          sáng bầu trời ✨
+        </p>
+        <footer>Made with 💗 for Vietnamese Women's Day</footer>
+      </main>
+    </div>
+    <script>
+      const reduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const petals = ["🌸", "🌷", "🌺", "💮", "🌼", "🍃", "✨"];
+      const hearts = ["💗", "💖", "💕", "❤️", "💘", "💞"];
+      function floaty(kind, x, y) {
+        const el = document.createElement("span");
+        el.className = "floaty " + kind;
+        el.textContent = (kind === "heart" ? hearts : petals)[
+          Math.floor(
+            Math.random() * (kind === "heart" ? hearts : petals).length,
+          )
+        ];
+        if (kind === "petal") {
+          el.style.left = Math.random() * 100 + "vw";
+          el.style.fontSize = 15 + Math.random() * 22 + "px";
+          el.style.animationDuration = 7 + Math.random() * 8 + "s";
+          el.style.setProperty("--drift", Math.random() * 200 - 100 + "px");
+        } else {
+          el.style.left = (x ?? 10 + Math.random() * 80) + "vw";
+          el.style.fontSize = 18 + Math.random() * 25 + "px";
+          el.style.animationDuration = 2.7 + Math.random() * 1.5 + "s";
+          el.style.setProperty("--side", Math.random() * 150 - 75 + "px");
+        }
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), kind === "petal" ? 16000 : 5000);
+      }
+      if (!reduced) {
+        for (let i = 0; i < 20; i++) setTimeout(() => floaty("petal"), i * 180);
+        setInterval(() => floaty("petal"), 520);
+      }
+      const line =
+        "Mỗi người phụ nữ đều xứng đáng được yêu thương và tỏa sáng 💖";
+      let idx = 0;
+      function type() {
+        const target = document.getElementById("typeLine");
+        if (idx < line.length) {
+          target.textContent += line[idx++];
+          setTimeout(type, 45);
+        }
+      }
+      setTimeout(type, 700);
+      document.getElementById("surpriseBtn").addEventListener("click", () => {
+        document.getElementById("surprise").classList.toggle("show");
+        for (let i = 0; i < 22; i++) setTimeout(() => floaty("heart"), i * 65);
+      });
+      document.addEventListener("click", (e) => {
+        if (e.target.closest("button")) return;
+        const x = (e.clientX / window.innerWidth) * 100;
+        for (let i = 0; i < 4; i++)
+          setTimeout(() => floaty("heart", x), i * 80);
+      });
+      const canvas = document.getElementById("fireworks"),
+        ctx = canvas.getContext("2d");
+      let particles = [];
+      function resize() {
+        canvas.width = innerWidth * devicePixelRatio;
+        canvas.height = innerHeight * devicePixelRatio;
+        ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+      }
+      addEventListener("resize", resize);
+      resize();
+      function firework(
+        x = Math.random() * innerWidth,
+        y = 100 + Math.random() * innerHeight * 0.55,
+      ) {
+        const colors = [
+          "#ff3d8b",
+          "#ffd166",
+          "#ffffff",
+          "#a8e6cf",
+          "#b388ff",
+          "#ff7b54",
+        ];
+        for (let i = 0; i < 75; i++) {
+          const a = (Math.PI * 2 * i) / 75,
+            s = 1.5 + Math.random() * 4;
+          particles.push({
+            x,
+            y,
+            vx: Math.cos(a) * s,
+            vy: Math.sin(a) * s,
+            life: 50 + Math.random() * 25,
+            max: 75,
+            r: 1 + Math.random() * 2,
+            color: colors[Math.floor(Math.random() * colors.length)],
+          });
+        }
+      }
+      function animateFireworks() {
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        particles = particles.filter((p) => p.life > 0);
+        for (const p of particles) {
+          ctx.globalAlpha = Math.min(1, p.life / 22);
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.985;
+          p.vy = p.vy * 0.985 + 0.035;
+          p.life--;
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(animateFireworks);
+      }
+      animateFireworks();
+      document.getElementById("burstBtn").addEventListener("click", () => {
+        for (let i = 0; i < 5; i++)
+          setTimeout(
+            () =>
+              firework(
+                innerWidth * (0.15 + Math.random() * 0.7),
+                innerHeight * (0.15 + Math.random() * 0.45),
+              ),
+            i * 260,
+          );
+        for (let i = 0; i < 18; i++) setTimeout(() => floaty("heart"), i * 70);
+      });
+      let audioCtx = null,
+        oscillators = [],
+        musicOn = false,
+        musicTimer = null;
+      function playNote(freq, duration = 0.32) {
+        if (!audioCtx) return;
+        const o = audioCtx.createOscillator(),
+          g = audioCtx.createGain();
+        o.type = "sine";
+        o.frequency.value = freq;
+        g.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.055, audioCtx.currentTime + 0.04);
+        g.gain.exponentialRampToValueAtTime(
+          0.0001,
+          audioCtx.currentTime + duration,
+        );
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.start();
+        o.stop(audioCtx.currentTime + duration + 0.03);
+      }
+      document
+        .getElementById("musicBtn")
+        .addEventListener("click", async () => {
+          const btn = document.getElementById("musicBtn"),
+            status = document.getElementById("musicStatus");
+          if (!musicOn) {
+            audioCtx =
+              audioCtx ||
+              new (window.AudioContext || window.webkitAudioContext)();
+            await audioCtx.resume();
+            musicOn = true;
+            btn.textContent = "🔇 Tắt nhạc nền";
+            status.textContent =
+              "♪ Đang phát giai điệu chuông nhẹ do trình duyệt tạo";
+            const notes = [
+              523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880, 698.46,
+              523.25, 659.25, 783.99, 1046.5,
+            ];
+            let i = 0;
+            musicTimer = setInterval(() => {
+              if (musicOn) {
+                playNote(notes[i % notes.length], 0.28);
+                if (i % 3 === 0)
+                  playNote(notes[(i + 4) % notes.length] / 2, 0.4);
+                i++;
+              }
+            }, 340);
+          } else {
+            musicOn = false;
+            clearInterval(musicTimer);
+            btn.textContent = "🎵 Bật nhạc nền";
+            status.textContent = "Nhạc đã tắt";
+          }
+        });
+      document
+        .getElementById("shareBtn")
+        .addEventListener("click", async () => {
+          const data = {
+            title: "Thiệp chúc mừng 20/10",
+            text: "Gửi ngàn lời yêu thương đến những người phụ nữ tuyệt vời! 🌷💗",
+            url: location.href,
+          };
+          try {
+            if (navigator.share) await navigator.share(data);
+            else {
+              await navigator.clipboard.writeText(data.text + " " + data.url);
+              alert(
+                "Đã sao chép lời chúc. Khi chạy file trực tiếp, hãy tải thiệp lên Internet để có đường link chia sẻ.",
+              );
+            }
+          } catch (err) {
+            if (err.name !== "AbortError")
+              alert(
+                "Bạn có thể sao chép đường dẫn trên thanh địa chỉ để chia sẻ.",
+              );
+          }
+        });
+    </script>
+  </body>
+</html>
